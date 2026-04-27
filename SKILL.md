@@ -1,6 +1,6 @@
 ---
-name: user-context-maximizer
-description: Maximize session value by capturing user preferences, detecting when /new is needed with clear explanations, and preserving context across sessions. Use when you want intelligent session management, proactive preference learning, and seamless continuity between AI conversations. Ideal for long-running projects and users who want increasingly personalized assistance.
+name: maximous
+description: MAXIMOUS - Maximum Context Optimizer User System. Maximize session value by capturing user preferences, detecting when /new is needed with clear explanations, and preserving context across sessions. Use when you want intelligent session management, proactive preference learning, and seamless continuity between AI conversations. MAXIMOUS learns from every interaction, preserves 95-99% of context, and automatically applies learned preferences. Ideal for long-running projects and users who want increasingly personalized assistance.
 author: Acib ABBADE
 version: 1.0.0
 license: MIT

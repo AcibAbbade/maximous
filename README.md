@@ -1,4 +1,5 @@
-# 🎯 User Context Maximizer
+# 🎯 MAXIMOUS
+## Maximum Context Optimizer User System
 
 > Maximize the value of every AI session through intelligent context capture, learning, and preservation.
 
@@ -6,9 +7,11 @@
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/Version-1.0.0-orange)](https://github.com)
 
-## ✨ What It Does
+## ✨ What is MAXIMOUS?
 
-**User Context Maximizer** is an intelligent system that learns from your interactions, preserves context across sessions, and maximizes the value of every conversation with your AI assistant.
+**MAXIMOUS** (Maximum Context Optimizer User System) is an intelligent system that learns from your interactions, preserves context across sessions, and maximizes the value of every conversation with your AI assistant.
+
+**Why the name?** MAXIMOUS = MAXimize + gloriOUS. It maximizes your context gloriously! 🚀
 
 ### 🧠 Key Features
 
@@ -26,11 +29,11 @@
 
 ```bash
 # Via ClawHub (recommended)
-clawhub install user-context-maximizer
+clawhub install maximous
 
 # Or manually
-git clone https://github.com/acibabbadecastro/user-context-maximizer.git
-cp -r user-context-maximizer ~/.openclaw/workspace/skills/
+git clone https://github.com/acibabbadecastro/maximous.git
+cp -r maximous ~/.openclaw/workspace/skills/
 ```
 
 ### Usage
@@ -260,4 +263,4 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 **Made with ❤️ for the OpenClaw community**
 
-*Version 1.0.0 | 2026-04-27*
+*MAXIMOUS v1.0.0 | 2026-04-27 | by Acib Abbade de Castro*
