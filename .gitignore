@@ -1,0 +1,35 @@
+# Ignore local data and backups
+*.log
+*.tmp
+*.cache
+local-data/
+backups/
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
+
+# Ignore editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Ignore sensitive data
+references/users/*/credentials.md
+references/users/*/access.md
+
+# But keep structure
+!references/
+!references/.gitkeep
+!references/users/
+!references/users/.gitkeep
+
+# Ignore test data
+test-data/
+*.test
+
+# Ignore packaged files (built separately)
+*.skill
+*.zip
+dist/
