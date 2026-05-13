@@ -1,11 +1,15 @@
 # 🎯 MAXIMOUS
 ## Maximum Context Optimizer User System
 
+**Autor:** Acib Abbade de Castro  
+**GitHub:** https://github.com/AcibAbbade/maximous  
+
 > Maximize the value of every AI session through intelligent context capture, learning, and preservation.
 
 [![OpenClaw](https://img.shields.io/badge/OpenClaw-Skill-blue)](https://openclaw.ai)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/Version-1.0.0-orange)](https://github.com)
+[![Version](https://img.shields.io/badge/Version-1.0.0-orange)](https://github.com/AcibAbbade/maximous)
+[![Author](https://img.shields.io/badge/Author-Acib%20Abbade%20de%20Castro-purple)](https://github.com/AcibAbbade)
 
 ## ✨ What is MAXIMOUS?
 
@@ -23,7 +27,54 @@
 
 ---
 
-## 🚀 Quick Start
+## ⚠️ IMPORTANTE: Como Ativar (Setup Required)
+
+MAXIMOUS is designed as a **framework** that requires activation. After installation, you MUST configure the automation components:
+
+### Step 1: Activate Context Preservation (5-min sync)
+```bash
+# Add to crontab
+crontab -e
+# Add line:
+*/5 * * * * /path/to/maximous/scripts/sync-context.sh
+```
+
+### Step 2: Activate Session Detector  
+```bash
+# Configure thresholds in SKILL.md
+# Or run manually: ./scripts/smart-new-detector.sh --check
+```
+
+### Step 3: Activate Learning System
+```bash
+# Run once to initialize
+./scripts/learning-bait.sh --context new_project
+```
+
+### Why This Design?
+MAXIMOUS prioritizes **control and transparency** over magic. You decide:
+- When to sync (cron schedule)
+- When to detect session limits (thresholds)  
+- When to ask learning questions (triggers)
+
+This prevents unexpected interruptions while ensuring maximum context preservation when activated.
+
+---
+
+## 📊 What Works Immediately vs Requires Setup
+
+| Feature | Status | Setup Required |
+|---------|--------|----------------|
+| Preference documentation | ✅ Works now | Manual |
+| Session checkpoint creation | ✅ Works now | Manual |
+| Context auto-sync every 5min | ⚠️ Needs cron | Yes |
+| Auto /new detection | ⚠️ Needs config | Yes |
+| Auto learning questions | ⚠️ Needs triggers | Yes |
+| Data export menu | ✅ Works now | Manual |
+
+---
+
+## 🎯 Quick Start (5 minutes)
 
 ### Installation
 
