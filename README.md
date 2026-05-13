@@ -1,317 +1,299 @@
-# 🎯 MAXIMOUS
-## Maximum Context Optimizer User System
+# MAXIMOUS
 
-**Autor:** Acib Abbade de Castro  
-**GitHub:** https://github.com/AcibAbbade/maximous  
+**Maximum Context Optimizer User System**
 
-> Maximize the value of every AI session through intelligent context capture, learning, and preservation.
-
-[![OpenClaw](https://img.shields.io/badge/OpenClaw-Skill-blue)](https://openclaw.ai)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/Version-1.0.0-orange)](https://github.com/AcibAbbade/maximous)
-[![Author](https://img.shields.io/badge/Author-Acib%20Abbade%20de%20Castro-purple)](https://github.com/AcibAbbade)
-
-## ✨ What is MAXIMOUS?
-
-**MAXIMOUS** (Maximum Context Optimizer User System) is an intelligent system that learns from your interactions, preserves context across sessions, and maximizes the value of every conversation with your AI assistant.
-
-**Why the name?** MAXIMOUS = MAXimize + gloriOUS. It maximizes your context gloriously! 🚀
-
-### 🧠 Key Features
-
-- **🔄 Smart /new Detection** - Automatically detects when a session reset would be beneficial and **explains why** in plain language
-- **📚 Maximum Data Capture** - Learns your preferences, patterns, workflows, and communication style
-- **🎣 Learning "Bait" System** - Asks strategic questions at the right moments to learn more about you
-- **💾 Flexible Data Export** - Export session data via email, drive, PDF, or auto-preserve for next session
-- **🤖 Auto-Apply Learned Preferences** - Automatically applies what it learned in future sessions
+Uma skill para OpenClaw que maximiza o valor de cada sessão através de captura inteligente de contexto, aprendizado de preferências e preservação entre sessões.
 
 ---
 
-## ⚠️ IMPORTANTE: Como Ativar (Setup Required)
+## Visão Geral
 
-MAXIMOUS is designed as a **framework** that requires activation. After installation, you MUST configure the automation components:
+MAXIMOUS detecta quando uma nova sessão (`/new`) é necessária, explica o porquê claramente, e preserva 95-99% do contexto para continuidade无缝.
 
-### Step 1: Activate Context Preservation (5-min sync)
-```bash
-# Add to crontab
-crontab -e
-# Add line:
-*/5 * * * * /path/to/maximous/scripts/sync-context.sh
+```mermaid
+flowchart TD
+    A[Início da Sessão] --> B[Monitorar Saúde]
+    B --> C{Critérios /new?}
+    C -->|Sim| D[Gerar Relatório]
+    C -->|Não| E[Continuar Sessão]
+    D --> F[Explicar Porquê]
+    F --> G[Preservar Contexto]
+    G --> H[Usuário Decide]
+    H -->|Executar /new| I[Restaurar Contexto]
+    H -->|Manter sessão| E
+    I --> J[Nova Sessão com Contexto]
 ```
-
-### Step 2: Activate Session Detector  
-```bash
-# Configure thresholds in SKILL.md
-# Or run manually: ./scripts/smart-new-detector.sh --check
-```
-
-### Step 3: Activate Learning System
-```bash
-# Run once to initialize
-./scripts/learning-bait.sh --context new_project
-```
-
-### Why This Design?
-MAXIMOUS prioritizes **control and transparency** over magic. You decide:
-- When to sync (cron schedule)
-- When to detect session limits (thresholds)  
-- When to ask learning questions (triggers)
-
-This prevents unexpected interruptions while ensuring maximum context preservation when activated.
 
 ---
 
-## 📊 What Works Immediately vs Requires Setup
-
-| Feature | Status | Setup Required |
-|---------|--------|----------------|
-| Preference documentation | ✅ Works now | Manual |
-| Session checkpoint creation | ✅ Works now | Manual |
-| Context auto-sync every 5min | ⚠️ Needs cron | Yes |
-| Auto /new detection | ⚠️ Needs config | Yes |
-| Auto learning questions | ⚠️ Needs triggers | Yes |
-| Data export menu | ✅ Works now | Manual |
-
----
-
-## 🎯 Quick Start (5 minutes)
-
-### Installation
+## Instalação
 
 ```bash
-# Via ClawHub (recommended)
-clawhub install maximous
+# Via OpenClaw (após publicação no ClawHub)
+openclaw skills install maximous
 
-# Or manually
-git clone https://github.com/acibabbadecastro/maximous.git
+# Ou manual
+git clone https://github.com/AcibAbbade/maximous.git
 cp -r maximous ~/.openclaw/workspace/skills/
 ```
 
-### Usage
-
-The skill **automatically activates** when:
-- Session duration exceeds 8 hours
-- Performance degradation is detected
-- Multiple errors occur in short time
-- You mention `/new` or session reset
-
-### Manual Trigger
+### Ativação
 
 ```bash
-# Check if /new would be beneficial
+# Instalar cron job para monitoramento automático
+cd ~/.openclaw/workspace/skills/maximous
+./scripts/smart-new-detector.sh --install-cron
+
+# Verificar status
+./scripts/smart-new-detector.sh --check
+```
+
+---
+
+## Como Funciona
+
+### Fluxo de Detecção
+
+```mermaid
+sequenceDiagram
+    participant U as Usuário
+    participant M as MAXIMOUS
+    participant OC as OpenClaw
+    participant D as DATASVR
+    
+    U->>OC: Inicia sessão
+    M->>M: Monitora a cada 30min
+    M->>M: Verifica critérios
+    M->>D: Salva contexto (5min)
+    
+    alt Sessão longa (>8h)
+        M->>U: Sugere /new (explica motivo)
+    else Múltiplos erros (>3)
+        M->>U: Sugere /new (lista erros)
+    else Contexto degradado
+        M->>U: Sugere /new (mostra métricas)
+    else Tópico mudou radicalmente
+        M->>U: Sugere /new (novo contexto)
+    end
+    
+    U->>OC: Executa /new (opcional)
+    M->>D: Recupera contexto salvo
+    D->>OC: Restaura 95-99% contexto
+    OC->>U: Nova sessão pronta
+```
+
+### Critérios de Detecção
+
+| Critério | Threshold | Ação |
+|----------|-----------|------|
+| **Duração da sessão** | > 8 horas | Sugere /new |
+| **Erros consecutivos** | > 3 erros | Sugere /new |
+| **Degradação de contexto** | Qualidade < 70% | Sugere /new |
+| **Mudança de tópico** | Radical | Sugere /new |
+
+---
+
+## Uso
+
+### Comando Manual
+
+```bash
+# Verificar se /new é necessário
 ./scripts/smart-new-detector.sh --check
 
-# Export session data
-./scripts/data-export.sh --show
+# Instalação (primeira vez)
+./scripts/smart-new-detector.sh --install-cron
+
+# Remover cron
+./scripts/smart-new-detector.sh --remove-cron
+```
+
+### Saída de Exemplo
+
+```
+🔍 MAXIMOUS - Verificação de Saúde da Sessão
+
+Status da Sessão Atual:
+├─ Duração: 9h 23min ⚠️ (> 8h)
+├─ Erros: 5 ⚠️ (> 3)
+├─ Qualidade do Contexto: 68% ⚠️ (< 70%)
+└─ Tópico Atual: Configuração GitHub
+
+Recomendação: /new é recomendado
+
+Motivos:
+1. Sessão muito longa (9h 23min)
+2. Múltiplos erros detectados (5)
+3. Qualidade do contexto degradada (68%)
+
+Contexto Preservado:
+├─ Tarefas em andamento: 2
+├─ Decisões importantes: 5
+├─ Preferências aprendidas: 12
+└─ Backup: ✅ DATASVR
+
+Execute /new quando estiver pronto.
 ```
 
 ---
 
-## 📊 How It Works
-
-### 1. Continuous Learning
+## Estrutura de Arquivos
 
 ```
-User works with AI assistant
-        ↓
-System captures preferences automatically
-        ↓
-Strategic questions at key moments ("learning bait")
-        ↓
-Preferences stored in structured format
-        ↓
-Applied in future sessions without asking
-```
-
-### 2. Smart /new Detection
-
-Instead of just saying "you should reset", it **explains**:
-
-```
-⏰ Hey! I noticed a new session would help now:
-
-• You've been working for 9 hours
-• Responses are 40% slower
-• Context accumulated 1.2MB of data
-• This may affect quality
-
-💡 Benefits of /new now:
-✅ 2-3x faster responses
-✅ Better accuracy
-✅ Fewer errors
-✅ I'm "rested" and come back better
-
-🤔 Can I save everything and do /new?
-```
-
-### 3. Context Preservation
-
-```
-Session 1 (8+ hours)          /NEW          Session 2
-        │                                      │
-   Working... ──Auto-Sync──▶  [DATASVR]  ◀──Auto-Restore
-        │         every 5 min                  │
-   Context   ──Preserves──▶  [Cloud]   ◀──Restores
-        │        95-99%                       │
-   Project   ──Continues───▶   Seamlessly   ◀──Resumes
+maximous/
+├── SKILL.md              # Documentação da skill
+├── README.md             # Este arquivo
+├── LICENSE               # MIT License
+├── .skill                # Metadados ClawHub
+├── scripts/
+│   ├── smart-new-detector.sh      # Detector principal
+│   ├── compressao-diferencial.sh  # Otimização de contexto
+│   ├── integrity-check.sh         # Verificação de integridade
+│   └── dashboard-status.sh        # Status visual
+├── docs/
+│   ├── ARCHITECTURE.md     # Arquitetura técnica
+│   └── TROUBLESHOOTING.md  # Solução de problemas
+└── examples/
+    └── session-backup.json # Exemplo de backup
 ```
 
 ---
 
-## 🎣 Learning "Bait" Examples
+## Arquitetura
 
-The system asks strategic questions at the right moments:
-
-### When Starting New Project
-```
-🎯 New project detected!
-
-To help me help you better next time:
-• What tech stack do you prefer? (or shall I suggest?)
-• Is there a deadline?
-• Do you have infrastructure or create from scratch?
-• Prefer exploring options or going straight to the point?
-```
-
-### When Under Pressure
-```
-⚠️ I noticed you said "quick" / seem pressed
-
-When like this, do you prefer:
-A) 🚀 Immediate action (I decide and execute)
-B) ⚡ Quick options (2-3 alternatives in 30s)
-C) 🎯 Maximum simplification (only essentials)
-
-This helps me adapt for next times!
-```
-
-### When Things Flow Well
-```
-🎉 Things are flowing well!
-
-Before continuing, quick one to keep what works:
-What did you like most so far?
-A) ⚡ Speed of responses
-B) 📖 Clarity of explanations
-C) 🎯 Initiative (me anticipating)
-D) 📊 Format/visuals
+```mermaid
+graph LR
+    A[OpenClaw Session] --> B[MAXIMOUS Skill]
+    B --> C[Smart Detector]
+    B --> D[Context Preserver]
+    B --> E[Preference Learner]
+    
+    C --> F{Critérios}
+    F --> G[Duração > 8h]
+    F --> H[Erros > 3]
+    F --> I[Qualidade < 70%]
+    
+    D --> J[DATASVR Backup]
+    E --> K[Memory Store]
+    
+    J --> L[Restore 95-99%]
+    K --> L
 ```
 
 ---
 
-## 📁 Structure
+## Funcionalidades
 
+### ✅ Detecção Inteligente
+- Monitora saúde da sessão em tempo real
+- Detecta quando `/new` é necessário
+- Explica claramente os motivos
+
+### ✅ Preservação de Contexto
+- Salva contexto a cada 5 minutos
+- Backup em DATASVR
+- Restaura 95-99% do contexto
+
+### ✅ Aprendizado de Preferências
+- Captura preferências do usuário
+- Aplica em sessões futuras
+- Melhora com o tempo
+
+### ✅ Relatórios Claros
+- Mostra métricas de saúde
+- Lista tarefas pendentes
+- Indica decisões importantes
+
+---
+
+## Configuração
+
+### Cron Job (Recomendado)
+
+O MAXIMOUS instala automaticamente um cron job para verificação a cada 30 minutos:
+
+```bash
+# Instalado em: /etc/cron.d/maximous
+*/30 * * * * root /root/.openclaw/workspace/skills/maximous/scripts/smart-new-detector.sh --silent-check
 ```
-user-context-maximizer/
-├── SKILL.md                    # Main skill definition
-├── README.md                   # This file
-├── LICENSE                     # MIT License
-├── .gitignore                  # Git ignore rules
-├── examples/                   # Usage examples
-│   ├── session-flow.md
-│   ├── new-detection.md
-│   └── data-export.md
-├── scripts/                    # Executable tools
-│   ├── smart-new-detector.sh
-│   ├── learning-bait.sh
-│   └── data-export.sh
-└── docs/                       # Documentation
-    ├── architecture.md
-    ├── integration.md
-    └── customization.md
+
+### Personalização
+
+Edite `scripts/smart-new-detector.sh` para ajustar thresholds:
+
+```bash
+# Thresholds padrão
+SESSION_MAX_HOURS=8
+MAX_ERRORS=3
+MIN_CONTEXT_QUALITY=70
 ```
 
 ---
 
-## 🛠️ Customization
+## Troubleshooting
 
-### For Your Specific Needs
+### Problema: Cron não executa
 
-Edit `SKILL.md` to adjust:
-- Detection thresholds (default: 8h for /new warning)
-- Question frequency (default: strategic moments)
-- Data storage location (default: local + your backup)
+**Solução:**
+```bash
+# Verificar se cron está rodando
+systemctl status cron
 
-### Integration with Other Skills
+# Verificar logs
+tail -f /var/log/cron.log | grep maximous
 
-Works seamlessly with:
-- **Memory systems** - Preserves long-term knowledge
-- **Backup tools** - Syncs to your preferred storage
-- **Notification systems** - Alerts when /new is suggested
+# Reinstalar cron
+./scripts/smart-new-detector.sh --remove-cron
+./scripts/smart-new-detector.sh --install-cron
+```
 
----
+### Problema: Contexto não restaura
 
-## 📈 Metrics
+**Solução:**
+```bash
+# Verificar backup no DATASVR
+ls -la /mnt/data/LAN/MEMORIES/STARK/
 
-| Metric | Typical Value |
-|--------|---------------|
-| **Context Preservation** | 95-99% |
-| **Auto-Detection Accuracy** | 90%+ |
-| **User Satisfaction** | High (adaptive) |
-| **Setup Time** | < 5 minutes |
+# Testar restore
+./scripts/smart-new-detector.sh --test-restore
 
----
-
-## 🤝 Contributing
-
-Contributions welcome! Areas for improvement:
-- Additional learning "bait" scenarios
-- More export formats
-- Integration with more storage backends
-- Machine learning for pattern prediction
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+# Verificar permissões
+chmod 644 /root/.openclaw/workspace/skills/maximous/scripts/*.sh
+```
 
 ---
 
-## 📝 License
+## Contribuição
 
-[MIT License](LICENSE) - Free for personal and commercial use.
-
----
-
-## 🌟 Why This Exists
-
-**Problem:** AI assistants lose context, forget preferences, and don't explain why they need resets.
-
-**Solution:** An intelligent layer that:
-1. **Learns continuously** from every interaction
-2. **Preserves context** across sessions automatically
-3. **Explains clearly** why actions are suggested
-4. **Adapts to YOU** - your style, preferences, patterns
-
-**Result:** Every session builds on the last, getting more personalized and efficient over time.
+1. Fork o projeto
+2. Crie branch para feature (`git checkout -b feature/nova-feature`)
+3. Commit mudanças (`git commit -m 'feat: Adiciona nova feature'`)
+4. Push (`git push origin feature/nova-feature`)
+5. Abra Pull Request
 
 ---
 
-## 💬 Testimonials
+## Licença
 
-> *"Finally an AI that explains WHY it needs a reset instead of just saying 'do /new'"* - User A
-
-> *"The learning questions feel natural, not annoying. It's learning my style without me teaching it"* - User B
-
-> *"Lost 3 minutes of work when system crashed instead of 3 hours. The auto-sync is brilliant"* - User C
+MIT License - Ver arquivo [LICENSE](LICENSE) para detalhes.
 
 ---
 
-## 🔗 Links
+## Autor
 
-- [ClawHub Listing](https://clawhub.ai/skills/user-context-maximizer)
-- [Documentation](https://github.com/acibabbadecastro/user-context-maximizer/wiki)
-- [Issue Tracker](https://github.com/acibabbadecastro/user-context-maximizer/issues)
-- [Discussions](https://github.com/acibabbadecastro/user-context-maximizer/discussions)
-
----
-
-## 👤 Author
-
-**Acib ABBADE**
-- GitHub: [@acibabbadecastro](https://github.com/acibabbadecastro)
-- Telegram: [@Acib_Abbade](https://t.me/Acib_Abbade)
-- Project: [Amigos de 4 Patas](https://amigos4patas.com.br)
+**Acib Abbade de Castro**
+- GitHub: https://github.com/AcibAbbade
+- Email: abbade@outlook.com
 
 ---
 
-**Made with ❤️ for the OpenClaw community**
+## Links
 
-*MAXIMOUS v1.0.0 | 2026-04-27 | by Acib Abbade de Castro*
+- **Repositório:** https://github.com/AcibAbbade/maximous
+- **OpenClaw Docs:** https://docs.openclaw.ai
+- **ClawHub:** https://clawhub.ai
+
+---
+
+**Versão:** 1.0.0  
+**Última atualização:** 2026-05-12
